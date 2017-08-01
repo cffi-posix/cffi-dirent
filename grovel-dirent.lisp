@@ -1,5 +1,5 @@
 ;;
-;;  cffi-fcntl  -  Common Lisp wrapper for fcntl.h
+;;  cffi-dirent  -  Common Lisp wrapper for dirent.h
 ;;
 ;;  Copyright 2017 Thomas de Grivel <thoxdg@gmail.com>
 ;;
@@ -16,21 +16,27 @@
 ;;  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ;;
 
-(in-package :common-lisp-user)
+(in-package :cffi-dirent)
 
-(defpackage :cffi-fcntl.system
-  (:use :common-lisp :asdf))
+(include "dirent.h")
+;(include "fcntl.h")
 
-(in-package :cffi-fcntl.system)
+(ctype ino-t "ino_t")
+(ctype off-t "off_t")
 
-(defsystem :cffi-fcntl
-  :name "cffi-fcntl"
-  :author "Thomas de Grivel <thoxdg@gmail.com>"
-  :version "0.1"
-  :description "Common Lisp wrapper for fcntl.h"
-  :defsystem-depends-on ("cffi-grovel")
-  :depends-on ("cffi" "cffi-errno")
-  :components
-  ((:file "package")
-   (:cffi-grovel-file "grovel-fcntl" :depends-on ("package"))
-   (:file "cffi-fcntl" :depends-on ("grovel-fcntl"))))
+(cstruct dirent "struct dirent"
+	 (d-ino "d_ino" :type ino-t)
+	 (d-off "d_off" :type off-t)
+	 (d-reclen "d_reclen" :type :unsigned-short)
+	 (d-type "d_type" :type :unsigned-char)
+	 (d-name "d_name" :type :char :count 256))
+
+(constant (+dt-unknown+ "DT_UNKNOWN"))
+(constant (+dt-fifo+ "DT_FIFO"))
+(constant (+dt-chr+ "DT_CHR"))
+(constant (+dt-dir+ "DT_DIR"))
+(constant (+dt-blk+ "DT_BLK"))
+(constant (+dt-reg+ "DT_REG"))
+(constant (+dt-lnk+ "DT_LNK"))
+(constant (+dt-sock+ "DT_SOCK"))
+(constant (+dt-wht+ "DT_WHT"))

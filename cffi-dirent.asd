@@ -16,33 +16,21 @@
 ;;  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ;;
 
-(in-package :common-lisp)
+(in-package :common-lisp-user)
 
-(defpackage :cffi-dirent
-  (:nicknames :dirent)
-  (:use
-   :cffi
-   :common-lisp
-   :errno)
-  (:shadow
-   #:open)
-  (:export
-   #:c-opendir
-   #:c-fdopendir
-   #:c-closedir
-   #:c-readdir
-   #:c-readdir-r
-   #:c-rewinddir
-   #:c-seekdir
-   #:c-telldir
-   #:opendir
-   #:fdopendir
-   #:closedir
-   #:with-dir
-   #:readdir
-   #:dirent-name
-   #:do-dir
-   #:readdir-r
-   #:rewinddir
-   #:seekdir
-   #:telldir))
+(defpackage :cffi-dirent.system
+  (:use :common-lisp :asdf))
+
+(in-package :cffi-dirent.system)
+
+(defsystem :cffi-dirent
+  :name "cffi-dirent"
+  :author "Thomas de Grivel <thoxdg@gmail.com>"
+  :version "0.1"
+  :description "Common Lisp wrapper for dirent.h"
+  :defsystem-depends-on ("cffi-grovel")
+  :depends-on ("cffi" "cffi-errno")
+  :components
+  ((:file "package")
+   (:cffi-grovel-file "grovel-dirent" :depends-on ("package"))
+   (:file "cffi-dirent" :depends-on ("grovel-dirent"))))
