@@ -122,6 +122,13 @@
 	    (let ((,var ,dirent))
 	      ,@body))))))
 
+(defun dir (name &key (test #'string<)
+                   (key #'dirent-name))
+  (let (dir)
+    (do-dir (d name)
+      (push d dir))
+    (sort dir test :key key)))
+
 #+test
 (do-dir (df "/")
   (format t "~&~S ~S ~S ~S ~S~%"
