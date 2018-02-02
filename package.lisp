@@ -24,8 +24,6 @@
    :cffi
    :common-lisp
    :errno)
-  (:shadow
-   #:open)
   (:export
    #:c-opendir
    #:c-fdopendir
