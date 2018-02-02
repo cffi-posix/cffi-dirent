@@ -64,6 +64,37 @@
 	    (error-errno "readdir"))
 	dirent)))
 
+(defcfun ("rewinddir" c-rewinddir) :void
+  (dirp :pointer))
+
+(defun rewinddir (dir)
+  (c-rewinddir dir))
+
+(defcfun ("seekdir" c-seekdir) :void
+  (dirp :pointer)
+  (pos :long))
+
+(defun seekdir (dirp pos)
+  (c-seekdir dirp pos))
+
+(defcfun ("telldir" c-telldir) :long
+  (dirp :pointer))
+
+(defun telldir (dir)
+  (let ((pos (c-telldir dir)))
+    (if (= -1 pos)
+        (error-errno "telldir")
+        pos)))
+
+(defcfun ("dirfd" c-dirfd) :int
+  (dirp :pointer))
+
+(defun dirfd (dir)
+  (let ((fd (c-dirfd dir)))
+    (if (< fd 0)
+        (error-errno "dirfd")
+        fd)))
+
 (defun dirent-ino (dirent)
   (foreign-slot-value dirent '(:struct dirent) 'd-ino))
 

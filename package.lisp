@@ -40,9 +40,24 @@
    #:closedir
    #:with-dir
    #:readdir
+   #:dirent-ino
+   #:dirent-off
+   #:dirent-reclen
+   #:dirent-type
    #:dirent-name
    #:do-dir
+   #:dir
    #:readdir-r
    #:rewinddir
    #:seekdir
-   #:telldir))
+   #:telldir
+   #:dirfd
+   #:+dt-unknown+
+   #:+dt-fifo+
+   #:+dt-chr+
+   #:+dt-dir+
+   #:+dt-blk+
+   #:+dt-reg+
+   #:+dt-lnk+
+   #:+dt-sock+
+   #:+dt-wht+))
