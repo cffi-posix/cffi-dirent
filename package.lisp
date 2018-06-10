@@ -44,7 +44,6 @@
    #:dirent-type
    #:dirent-name
    #:do-dir
-   #:dir
    #:readdir-r
    #:rewinddir
    #:seekdir
